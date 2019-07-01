@@ -1,0 +1,306 @@
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>MessageTracking Log Search</title>
+    <link rel="stylesheet" href="node_modules\bootstrap\dist\css\bootstrap.min.css">
+    <link rel="stylesheet" href="node_modules\@fortawesome\fontawesome-free\css\all.css">
+    <link rel="stylesheet" href="node_modules\datatables.net-bs4\css\dataTables.bootstrap4.css">   
+    <link rel="stylesheet" href="node_modules\datatables.net-responsive-dt\css\responsive.dataTables.min.css">
+    <link rel="stylesheet" href="node_modules\datatables.net-rowgroup-dt\css\rowGroup.dataTables.min.css">    
+    <style>
+      .top-buffer {
+        margin-top: 3em;
+      }
+    </style>
+  </head>
+  <body>
+    
+ <container>
+    <div id ="spinner" style="position:fixed;top:50%;left:50%" class='d-none'></div>
+    <div class="col-10 mx-auto mt-5" id="FormContainer">
+
+        <form id="EmailForm">
+            <div class="form-group row">
+            <div class="col-lg-6 mx-auto">
+        
+            <!--  POWERSHEL URL -->
+            <div class="form-group row">
+            <div class="col-lg-12 mx-auto">
+            <h5>Powershell url</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="fas fa-server"></i></div></span>
+            <input id="Computername-form" type="text" class="form-control" value="http://cas.contoso.com/Powershell/" required>    
+            </div>
+            </div>
+            </div>
+
+          <!--  Mail server -->
+            <div class="form-group row">
+                <div class="col-lg-12 mx-auto">
+                <h5>Mail server</h5>
+                <div class="input-group">                    
+                <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="fas fa-server"></i></div></span>
+                <input id="Server-form" type="text" class="form-control" value="srv-mbx01.ac-forum.local">    
+                </div>
+                </div>
+                </div>
+          
+          <!--  SUBJECT SELECT -->
+            <div class="form-group row">
+            <div class="col-lg-12 mx-auto">      
+            <h5>Subject</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="fa fa-edit"></i></div></span>
+            <input id="Subject-form" type="text" class="form-control">
+            </div>
+            </div>
+            </div>
+            
+            <!--  SENDER -->
+            <div class="form-group row">
+            <div class="col-lg-12 mx-auto">
+            <h5>Sender address</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="far fa-address-card"></i></div></span>
+            <input id="Sender-form" type="email" class="form-control" placeholder="Email Address">    
+            </div>
+            </div>
+            </div>
+          
+            <!--  RECIPIENT -->
+            <div class="form-group row">
+            <div class="col-lg-12 mx-auto">
+            <h5>Recipient address</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="far fa-address-card"></i></div></span>
+            <input id="Recipients-form" type="email" class="form-control" placeholder="Email Address">    
+            </div>
+            </div>
+            </div>
+          
+            <!--  MESSAGEID -->
+            <div class="form-group row">
+          
+            <div class="col-lg-6 mx-auto my-auto">
+            <h5>MessageID</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="fa fa-edit"></i></div></span>
+            <input id="MessageID-form" type="email" class="form-control">    
+            </div>
+            </div>  
+          
+            <!-- SHOW SERVICE MESSAGES -->	
+          <div class="col-lg-6 mx-auto my-auto">
+            <h5 class="mt-3 mt-lg-0">Filter</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="fas fa-check"></i></div></span>
+            <select class="form-control" id="ServiceMessages-form">
+                                <option>Yes</option>
+                                <option>No</option>              
+            </select>
+            </div>
+          </div>
+          </div>
+        
+                <!--  SOURCE -->
+           <div class="form-group row">
+            <div class="col-lg-6 mx-auto">
+            <h5>Source</h5>
+            <div class="input-group">
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="fab fa-elementor"></i></div></span>
+            <select class="form-control" id="Source-form" disabled>
+              <option></option>
+            <option>ADMIN</option>
+            <option>AGENT</option>
+            <option>APPROVAL</option>
+            <option>BOOTLOADER</option>
+            <option>DNS</option>
+            <option>DSN</option>
+            <option>GATEWAY</option>
+            <option>MAILBOXRULE</option>
+            <option>MEETINGMESSAGEPROCESSOR</option>
+            <option>ORAR</option>
+            <option>PICKUP</option>
+            <option>POISONMESSAGE</option>
+            <option>PUBLICFOLDER</option>
+            <option>QUEUE</option>
+            <option>REDUNDANCY</option>
+            <option>ROUTING</option>
+            <option>SAFETYNET</option>
+            <option>SMTP</option>
+            <option>STOREDRIVER</option>
+            </select>
+            </div>
+            </div>
+          
+                <!--  EVENTID SELECT -->
+            <div class="col-lg-6 mx-auto my-auto">
+            <h5>EventId</h5>
+            <div class="input-group">
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="fab fa-elementor"></i></div></span>
+            <select class="form-control" id="EventId-form">
+                <option></option>
+            <option>BADMAIL</option>
+            <option>CLIENTSUBMISSION</option>
+            <option>DEFER</option>
+            <option>DELIVER</option>
+            <option>DELIVERFAIL</option>
+            <option>DROP</option>
+            <option>DSN</option>
+            <option>DUPLICATEDELIVER</option>
+            <option>DUPLICATEEXPAND</option>
+            <option>DUPLICATEREDIRECT</option>
+            <option>EXPAND</option>
+            <option>FAI</option>
+            <option>HADISCARD</option>
+            <option>HARECEIVE</option>
+            <option>HAREDIRECT</option>
+            <option>HAREDIRECTFAIL</option>
+            <option>INITMESSAGECREATED</option>
+            <option>LOAD</option>
+            <option>MODERATIONEXPIRE</option>
+            <option>MODERATORAPPROVE</option>
+            <option>MODERATORREJECT</option>
+            <option>MODERATORSALLNDR</option>
+            <option>NOTIFYMAPI</option>
+            <option>NOTIFYSHADOW</option>
+            <option>POISONMESSAGE</option>
+            <option>PROCESS</option>
+            <option>PROCESSMEETINGMESSAGE</option>
+            <option>RECEIVE</option>
+            <option>REDIRECT</option>
+            <option>RESOLVE</option>
+            <option>RESUBMIT</option>
+            <option>RESUBMITDEFER</option>
+            <option>RESUBMITFAIL</option>
+            <option>SEND</option>
+            <option>SUBMIT</option>
+            <option>SUBMITDEFER</option>
+            <option>SUBMITFAIL</option>
+            <option>SUPPRESSED</option>
+            <option>THROTTLE</option>
+            <option>TRANSFER</option>
+            </select>
+            </div>
+            </div>
+            
+          </div>
+            
+          
+                 
+            <!--  START TIME -->
+            <div class="form-group row">
+            <div class="col-lg-6 mx-auto">
+            <h5>Start time</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="far fa-calendar-alt"></i></div></span>
+            <input id="StartTime-form" type="datetime-local" class="form-control">                      
+            </div>
+            </div>  
+                            
+            <!--  END TIME -->				
+            <div class="col-lg-6 mx-auto my-auto">
+            <h5 class="mt-3 mt-lg-0">End time</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="far fa-calendar-alt"></i></div></span>
+            <input id="EndTime-form" type="datetime-local" class="form-control">                      
+            </div>
+            </div>
+                                    
+            </div>                   
+            
+            <!--  USERNAME -->
+            <div class="form-group row">
+            <div class="col-lg-6 mx-auto">
+            <h5>Username</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="fa fa-user"></i></div></span>
+            <input id="Username-form" type="text" class="form-control">                      
+            </div>
+            </div>  
+                            
+            <!--  PASSWORD -->				
+            <div class="col-lg-6 mx-auto my-auto">
+            <h5 class="mt-3 mt-lg-0">Password</h5>
+            <div class="input-group">                    
+            <span class="input-group-append"><div class="input-group-text bg-transparent"><i class="fa fa-unlock"></i></div></span>
+            <input id="Password-form" type="Password" class="form-control">                      
+            </div>
+            </div>
+                                    
+            </div>  
+            
+            
+            <!-- RETURN BUTTON -->
+            <div class="form-group row">
+            <div class="col-lg-12 mx-auto">	
+            <div class="input-group">
+            <button id="getmailbtn" type="submit" class="btn btn-primary btn-lg btn-block mt-3">Submit</button>
+            </div>
+            </div>
+            </div>   
+            
+            </div>
+            </div>
+            </form>
+          </div>
+
+<!-- Output -->
+ <div class="col-10 mx-auto mt-5 d-none" id="OutputContainer">
+  <table id="output" class="table table-striped table-bordered display responsive nowrap" width="100%">
+      <thead>
+          <tr>        
+              <th>MessageID</th>
+              <th>Timestamp</th>
+              <th>Subject</th>
+              <th>EventId</th>              
+              <th>ClientHostname</th>
+              <th>ServerHostname</th>
+              <th>Sender</th>
+              <th>Recipients</th>
+              <th>Directionality</th>
+              <th>Source</th>
+              <th>Size</th>
+          </tr>
+      </thead>      
+  </table>
+<!-- RETURN BUTTON from output -->
+  <div class="form-group row">
+    <div class="col-lg-12 mx-auto">	
+    <div class="input-group">
+    <button id="returnbtn" type="buton" class="btn btn-primary btn-lg btn-block mt-3">Return</button>
+    </div>
+    </div>
+    </div> 
+
+
+</div>
+
+<!--- Error --->
+<div class="col-10 mx-auto mt-5 d-none" id="ErrorContainer">
+<div class="row justify-content-center top-buffer">
+    <div class="alert alert-danger" role="alert" id='alertbox' style="display: block">
+        <strong id="AlertTitle"></strong>
+        <div class="message">Flux capacitor is not Fluxing.</div>
+    </div>
+</div>
+
+<!-- RETURN BUTTON from error -->
+<div class="form-group row">
+    <div class="col-lg-12 mx-auto">	
+    <div class="input-group">
+    <button id="returnbtnerror" type="buton" class="btn btn-primary btn-lg btn-block mt-3">Return</button>
+    </div>
+    </div>
+    </div> 
+
+
+
+</div>
+
+</container>      
+  </body>
+  <script>
+    require('./renderer.js')
+  </script>
+</html>
